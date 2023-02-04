@@ -1,4 +1,4 @@
-import 'package:clima_v2/constants.dart';
+import 'package:clima_v2/core/constants.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkHelper {

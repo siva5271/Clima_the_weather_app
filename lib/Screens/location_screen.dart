@@ -1,15 +1,20 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:convert';
 
 import 'package:clima_v2/Services/location.dart';
-import 'package:clima_v2/constants.dart';
+import 'package:clima_v2/core/constants.dart';
+import 'package:clima_v2/core/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../Services/networking.dart';
 import '../Services/weather.dart';
 import 'city_screen.dart';
 
+// ignore: must_be_immutable
 class LocationScreen extends StatefulWidget {
-  LocationScreen({required this.currentLocationDetails});
+  LocationScreen({super.key, required this.currentLocationDetails});
   dynamic currentLocationDetails;
   @override
   _LocationScreenState createState() => _LocationScreenState();
@@ -23,7 +28,6 @@ class _LocationScreenState extends State<LocationScreen> {
   String selectedText = '';
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     UpdateUI(widget.currentLocationDetails);
   }
@@ -52,13 +56,13 @@ class _LocationScreenState extends State<LocationScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/location_background.jpg'),
+            image: const AssetImage('images/location_background.jpg'),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
                 Colors.white.withOpacity(0.8), BlendMode.dstATop),
           ),
         ),
-        constraints: BoxConstraints.expand(),
+        constraints: const BoxConstraints.expand(),
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,17 +78,14 @@ class _LocationScreenState extends State<LocationScreen> {
                       dynamic finalTemp = await jsonDecode(temp.toString());
                       UpdateUI(finalTemp);
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.near_me,
                       size: 50.0,
                     ),
                   ),
                   TextButton(
                     onPressed: () async {
-                      typedName = await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CityScreen()),
-                      );
+                      typedName = await Get.toNamed(rCityScreen);
                       if (typedName != null) {
                         String weatherDetailsOfCity =
                             await NetworkHelper().CityNetworkData(typedName);
@@ -93,7 +94,7 @@ class _LocationScreenState extends State<LocationScreen> {
                         UpdateUI(finalWeatherDetails);
                       }
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.location_city,
                       size: 50.0,
                     ),
@@ -101,7 +102,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(left: 15.0),
+                padding: const EdgeInsets.only(left: 15.0),
                 child: Row(
                   children: <Widget>[
                     Text(
@@ -116,7 +117,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(right: 15.0),
+                padding: const EdgeInsets.only(right: 15.0),
                 child: Text(
                   "$selectedText in $cityName!",
                   textAlign: TextAlign.right,
